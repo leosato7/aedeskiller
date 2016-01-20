@@ -1,6 +1,7 @@
 /* globals Phaser:false */
 // create BasicGame Class
-BasicGame = {
+// menu e configuracoes gerais
+var BasicGame = {
 
 };
 
@@ -58,12 +59,13 @@ BasicGame.Game.prototype = {
 
     create: function () {
         // Add logo to the center of the stage
-        this.logo = this.add.sprite(
-            this.world.centerX, // (centerX, centerY) is the center coordination
-            this.world.centerY,
-            'logo');
+        //this.logo = this.add.sprite(
+          //  this.world.centerX, // (centerX, centerY) is the center coordination
+            //this.world.centerY,
+            //'logo');
         // Set the anchor to the center of the sprite
-        this.logo.anchor.setTo(0.5, 0.5);
+        //this.logo.anchor.setTo(0.5, 0.5);
+        this.add($('<h1/>').text('FUCK'));
 
     },
 
