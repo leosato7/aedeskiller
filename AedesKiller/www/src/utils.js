@@ -12,7 +12,7 @@ function Utils() {
 
 var utils;
 
-$(function() {
+(function() {
     utils = new Utils();
-})
+})();
 
