@@ -65,7 +65,7 @@ BasicGame.Game.prototype = {
             //'logo');
         // Set the anchor to the center of the sprite
         //this.logo.anchor.setTo(0.5, 0.5);
-        this.add($('<h1/>').text('FUCK'));
+        //this.add($('<h1/>').text('FUCK'));
 
     },
 

@@ -39,23 +39,26 @@
     <!-- Load game source files -->
     <script src="src/Game.js"></script>
     <!-- Load game entrance -->
-    <!--script src="src/app.js"></script-->
+    <script src="src/app.js"></script>
     <!-- Load and initialize Cordova -->
     <script src="cordova.js"></script>
     <script src="src/cordova-init.js"></script>
 </head>
-<body style="background: url('asset/focos_casa.jpeg') no-repeat center center fixed #CCC;">
+<body>
+    <!-- Main canvas for rendering game stage -->
+    <div id="game"></div>
     
-    <div style="width: 100%;height: 100%;vertical-align: middle;">
-            <div style="margin-top: 5%">
-                <ul style="list-style: none;">
-                    <li style="width: 90%;height: 75px;border: 1px solid red;margin: 5px;padding: 5px;"> <button>Game Nave</button> </li>
-                    <li style="width: 90%;height: 75px;border: 1px solid red;margin: 5px;padding: 5px;"> <button>Game Mosca</button> </li>
-                    <li style="width: 90%;height: 75px;border: 1px solid red;margin: 5px;padding: 5px;"> <button>Game Memoria</button> </li>
-                </ul>
-            </div>
+    <div id="tabs">
+    
+        <div id="">
             
         </div>
+        
+        <div id="mosca">
+        
+        </div>
+        
+    </div>
     
     
 </body>

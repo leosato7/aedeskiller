@@ -4,7 +4,7 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "projectGuid": "90abe010-2bb6-40e6-8665-19142c8e6973",
-      "lastModifiedDate": 1453332016698,
+      "lastModifiedDate": 1453563509829,
       "creationDate": 1453332015339
     },
     "sourceDirectory": "www",
@@ -112,7 +112,7 @@
         "addlPermissions_": "",
         "excludedLibraries_": "",
         "cordovaCLIVersion_": "5.1.1",
-        "crosswalkVersion_": "14",
+        "crosswalkVersion_": "15",
         "appVersion_": "0.0.1",
         "appDescription_": "Use this template to start with a blank landscape Game from Phaser",
         "appAuthor_": "Intel XDK",
