@@ -1,11 +1,14 @@
 function Lang() {
+    
     var _self = this;
     
     _self.BR = {
-        cancelar: 'Cancelar'
+        cancelar: 'Cancelar',
+        menu: {}        
     };
     _self.EN = {
-        cancelar: 'Cancel'
+        cancelar: 'Cancel',
+        menu: {}        
     };
     
 
