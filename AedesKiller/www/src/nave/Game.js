@@ -56,7 +56,10 @@ BasicGame.Game.prototype = {
 
     preload: function () {
         this.load.image('fundo', '../asset/nave/fundo.png');
+        this.load.image('seta_up', '../asset/nave/seta-up.png');
+        this.load.image('seta_down', '../asset/nave/seta-down.png');
         this.load.spritesheet('soldier', '../asset/nave/soldier.png', 32, 32, 96);
+        this.load.spritesheet('casas', '../asset/nave/casas-sprite.png', 46.3, 59.5, 114);
     },
 
     create: function () {
@@ -69,22 +72,25 @@ BasicGame.Game.prototype = {
         this.fundo.anchor.setTo(0.5, 0.5);
         this.fundo.scale.setTo(4, 4);
         
-        gameItens.graphics = this.add.graphics(100, 100);
+        naveUtils.actionMenu(this);
 
-        // draw a rectangle
-        gameItens.graphics.lineStyle(0);
-        gameItens.graphics.beginFill(0xFFFF0B, 0.5);
-        gameItens.graphics.drawRect(0, 0, 80, 600);
-        gameItens.graphics.y = 0;
-        gameItens.graphics.x = this.world.width - gameItens.graphics.width;
+        naveUtils.criarCasa(this, -46.3, 160, 5);
+        naveUtils.criarCasa(this, -46.3, 190, 6);
+        naveUtils.criarCasa(this, -46.3, 220, 11);
+        naveUtils.criarCasa(this, -46.3, 250, 25);
+        naveUtils.criarCasa(this, -46.3, 290, 19);
+        naveUtils.criarCasa(this, -46.3, 320, 23);
+        naveUtils.criarCasa(this, -46.3, 350, 24);
+        naveUtils.criarCasa(this, -46.3, 390, 35);
+        naveUtils.criarCasa(this, -46.3, 420, 16);
         
         this.soldier = this.add.sprite(
-            100,
-            150,
+            this.world.width - gameItens.graphics.width - 90,
+            160, // 160 é o limite para andar em Y
             'soldier'
         );
-
-        //this.sprite.scale.set(2);
+        
+        
         //this.sprite.animations.add('walk');
         //this.sprite.animations.play('walk', 20, true);
 
