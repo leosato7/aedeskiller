@@ -17,6 +17,15 @@ function NaveUtils(thisGame) {
         {name: "VENON", chance: [0, 5], time: 23} // 5x
     ];
     
+    // os espaços movimentados ficam apenas em Y
+    // os mosquitos se movimentam em X mas eles só possuem posições Y
+    // que o player possa andar
+    _self.movimentacao = {
+        blocosMovimentos: [160, 200, 240, 280, 320],
+        blocoAtual: 0,
+        mover: 0 // 1 sobe, -1 desce, 0 parado
+    };
+    
     _self.getRandomSkill = function() {
         var num = Math.floor(Math.random() * _self.skillMAX);
 
@@ -60,11 +69,15 @@ function NaveUtils(thisGame) {
     };
     
     _self.btnUpActive = function() {
+        if(_self.movimentacao.mover != 0) return;
         _self.gameScope.soldier.animations.play('up', 10, true);
+        _self.movimentacao.mover = 1;
     };
     
     _self.btnDownActive = function() {
+        if(_self.movimentacao.mover != 0) return;
         _self.gameScope.soldier.animations.play('down', 10, true);
+        _self.movimentacao.mover = -1;
     };
     
     _self.actionMenu = function() {
@@ -130,6 +143,40 @@ function NaveUtils(thisGame) {
             _self.reloading = false;
         }, _self.gameScope);
         
+    };
+    
+    _self.movimentarSoldado = function() {
+        if(_self.movimentacao.mover != 0) {
+            if(_self.movimentacao.mover > 0) {
+                // subir
+                if(_self.movimentacao.blocoAtual >= 0) {
+                    if(_self.gameScope.soldier.y > _self.movimentacao.blocosMovimentos[_self.movimentacao.blocoAtual - 1]) {
+                        _self.gameScope.soldier.y -= 1;
+                    } else {
+                        _self.movimentacao.blocoAtual--;
+                        _self.movimentacao.mover = 0;
+                    }
+                } else {
+                    _self.movimentacao.blocoAtual = 0;
+                    _self.movimentacao.mover = 0;
+                }
+            } else if (_self.movimentacao.mover < 0) {
+                // descer
+                if(_self.movimentacao.blocoAtual < _self.movimentacao.blocosMovimentos.length) {
+                    if(_self.gameScope.soldier.y < _self.movimentacao.blocosMovimentos[_self.movimentacao.blocoAtual + 1]) {
+                        _self.gameScope.soldier.y += 1;
+                    } else {
+                        _self.movimentacao.blocoAtual++;
+                        _self.movimentacao.mover = 0;
+                    }
+                } else {
+                    _self.movimentacao.blocoAtual = _self.movimentacao.blocosMovimentos.length - 1;
+                    _self.movimentacao.mover = 0;
+                }
+            }
+        } else {
+            _self.gameScope.soldier.animations.frame = 13;        
+        }
     };
     
 }

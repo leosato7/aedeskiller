@@ -99,11 +99,11 @@ BasicGame.Game.prototype = {
         
         this.soldier = this.add.sprite(
             this.world.width - gameItens.graphics.width - 90,
-            160, // 160 é o limite para andar em Y
+            180, 
             'soldier'
         );
         
-        // normal é 13
+        this.soldier.animations.frame = 13;
         this.soldier.animations.add('down', [0,1,2]);
         this.soldier.animations.add('up', [36, 37, 38]);
         
@@ -141,6 +141,7 @@ BasicGame.Game.prototype = {
     
     update: function() {
         this.reloading.rotation += 0.10;
+        naveUtils.movimentarSoldado();
     }, 
     
     render: function() {
