@@ -2,8 +2,12 @@
 // create BasicGame Class
 // menu e configuracoes gerais
 var BasicGame = {
-
+    
 };
+
+var gameItens = {};
+gameItens.acmenu = null;
+gameItens.graphics = null;
 
 // create Game function in BasicGame
 BasicGame.Game = function (game) {
@@ -51,22 +55,40 @@ BasicGame.Game.prototype = {
     },
 
     preload: function () {
-
-        // Here we load the assets required for our preloader (in this case a 
-        // background and a loading bar)
-        this.load.image('logo', '../asset/phaser.png');
+        this.load.image('fundo', '../asset/nave/fundo.png');
+        this.load.spritesheet('soldier', '../asset/nave/soldier.png', 32, 32, 96);
     },
 
     create: function () {
-        // Add logo to the center of the stage
-        this.logo = this.add.sprite(
+        
+        this.fundo = this.add.sprite(
            this.world.centerX, // (centerX, centerY) is the center coordination
             this.world.centerY,
-            'logo');
-        // Set the anchor to the center of the sprite
-        this.logo.anchor.setTo(0.5, 0.5);
-        //this.add($('<h1/>').text('FUCK'));
+            'fundo');
+        
+        this.fundo.anchor.setTo(0.5, 0.5);
+        this.fundo.scale.setTo(4, 4);
+        
+        gameItens.graphics = this.add.graphics(100, 100);
 
+        // draw a rectangle
+        gameItens.graphics.lineStyle(0);
+        gameItens.graphics.beginFill(0xFFFF0B, 0.5);
+        gameItens.graphics.drawRect(0, 0, 80, 600);
+        gameItens.graphics.y = 0;
+        gameItens.graphics.x = this.world.width - gameItens.graphics.width;
+        
+        this.soldier = this.add.sprite(
+            100,
+            150,
+            'soldier'
+        );
+
+        //this.sprite.scale.set(2);
+        //this.sprite.animations.add('walk');
+        //this.sprite.animations.play('walk', 20, true);
+
+        
     },
 
     gameResized: function (width, height) {
@@ -77,6 +99,18 @@ BasicGame.Game.prototype = {
         // this callback is only really useful if you use a ScaleMode of RESIZE 
         // and place it inside your main game state.
 
+    },
+    
+    update: function() {
+        
+    }, 
+    
+    render: function() {
+        
+    },
+    
+    pause: function() {
+        
     }
 
 };

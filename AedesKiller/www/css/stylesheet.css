@@ -56,3 +56,8 @@ body {
     padding: 10px;
     clear: both;
 }
+
+.game-nave-canvas {
+    width: 100%;
+    height: 100%;
+}
