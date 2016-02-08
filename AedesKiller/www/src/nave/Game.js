@@ -8,6 +8,7 @@ var naveUtils;
 var gameItens = {};
 gameItens.acmenu = null;
 gameItens.graphics = null;
+gameItens.textAcSkill = "";
 
 // create Game function in BasicGame
 BasicGame.Game = function (game) {
@@ -60,6 +61,8 @@ BasicGame.Game.prototype = {
         this.load.image('seta_down', '../asset/nave/seta-down.png');
         this.load.spritesheet('soldier', '../asset/nave/soldier.png', 32, 32, 96);
         this.load.spritesheet('casas', '../asset/nave/casas-sprite.png', 46.3, 59.5, 114);
+        this.load.image('reload', '../asset/nave/reload.png');
+        this.load.image('reloading', '../asset/nave/reloading.png');
         
         this.load.image('sk_0', '../asset/nave/skills/EX-lancer.png');
         this.load.image('sk_1', '../asset/nave/skills/black-hole.png');
@@ -99,10 +102,30 @@ BasicGame.Game.prototype = {
             160, // 160 é o limite para andar em Y
             'soldier'
         );
+        
+        // normal é 13
         this.soldier.animations.add('down', [0,1,2]);
         this.soldier.animations.add('up', [36, 37, 38]);
         
-        // normal é 13
+        this.reloading = this.add.sprite(
+            gameItens.graphics.x + (gameItens.graphics.width / 2),
+            50,
+            'reloading'
+        );
+        this.reloading.visible = false;
+        this.reloading.anchor.set(0.5);
+        this.reloading.scale.set(0.4);
+        
+        this.reloadBtn = this.add.button(
+            gameItens.graphics.x + (gameItens.graphics.width / 2), 
+            200, 
+            'reload', 
+            naveUtils.reload, 
+            this, 
+            1, 0, 2);
+            
+        this.reloadBtn.anchor.set(0.5);
+        this.reloadBtn.scale.set(0.4);
         
     },
 
@@ -117,7 +140,7 @@ BasicGame.Game.prototype = {
     },
     
     update: function() {
-        
+        this.reloading.rotation += 0.10;
     }, 
     
     render: function() {
