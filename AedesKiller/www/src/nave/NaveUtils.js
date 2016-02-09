@@ -4,27 +4,8 @@ function NaveUtils(thisGame) {
     _self.skillMAX = 130; // deve ser relativo aos valores das skills abaixo
     _self.skillNumber = 0;
     _self.reloading = false; // bloqueio, evita bugs.
+    _self.skillTimerEvent = null;
     
-    // a chance é o máximo em random, a % de chances varia pelo espaço ocupado
-    // com 160 no max as chances de VENON é uma média de 3,125%
-    _self.skills = [
-        // {nome, chances de ativar, tempo de recarga em segundos, função de criação, objetos em mundo, velocidade}
-        {name: "LANÇA \nEX", chance: [21, 45], time: 2, func: _self.addSpearEX, objetos: [], speed: 1}, // 25x
-        {name: "BLACK \nHOLE", chance: [6, 20], time: 40, func: _self.addBlackHole, objetos: [], speed: 1}, // 15x
-        {name: "FIRE", chance: [76, 105], time: 3, func: _self.addFire, objetos: [], speed: 1}, // 30x
-        {name: "ICE", chance: [106, 130], time: 9, func: _self.addIce, objetos: [], speed: 1}, // 25x
-        {name: "THUNDER", chance: [46, 75], time: 5, func: _self.addThunder, objetos: [], speed: 1}, // 30x
-        {name: "VENON", chance: [0, 5], time: 23, func: _self.addVenon, objetos: [], speed: 1} // 5x
-    ];
-    
-    // os espaços movimentados ficam apenas em Y
-    // os mosquitos se movimentam em X mas eles só possuem posições Y
-    // que o player possa andar
-    _self.movimentacao = {
-        blocosMovimentos: [160, 200, 240, 280, 320],
-        blocoAtual: 0,
-        mover: 0 // 1 sobe, -1 desce, 0 parado
-    };
     
     _self.addSpearEX = function() {
         _self.gameScope.shoot_0 = _self.gameScope.add.sprite(
@@ -38,6 +19,8 @@ function NaveUtils(thisGame) {
         _self.gameScope.shoot_0.anchor.setTo(1);
         
         _self.gameScope.shoot_0.x--;
+        
+        return _self.gameScope.shoot_0;
     };
     
     _self.addBlackHole = function() {
@@ -47,8 +30,9 @@ function NaveUtils(thisGame) {
             'shoot_1'
         );
         
-        //_self.gameScope.shoot_1.scale.set(1);
-        _self.gameScope.shoot_1.anchor.setTo(1, 0.5);
+        _self.gameScope.shoot_1.anchor.setTo(0.5, 0.5);
+        
+        return _self.gameScope.shoot_1;
     };
     
     _self.addFire = function() {
@@ -62,6 +46,8 @@ function NaveUtils(thisGame) {
         _self.gameScope.shoot_2.animations.play('st2', 10, true);
         _self.gameScope.shoot_2.scale.set(1.4);
         _self.gameScope.shoot_2.anchor.setTo(1, 0);
+        
+        return _self.gameScope.shoot_2;
     };
     
     _self.addIce = function() {
@@ -75,6 +61,8 @@ function NaveUtils(thisGame) {
         _self.gameScope.shoot_3.animations.play('st3', 5, true);
         _self.gameScope.shoot_3.scale.setTo(-3, 6);
         _self.gameScope.shoot_3.anchor.setTo(0, 0.5);
+        
+        return _self.gameScope.shoot_3;
     };
     
     _self.addThunder = function() {
@@ -88,6 +76,8 @@ function NaveUtils(thisGame) {
         _self.gameScope.shoot_4.animations.play('st4', 5, true);
         _self.gameScope.shoot_4.scale.set(0.8);
         _self.gameScope.shoot_4.anchor.setTo(1, 0);
+        
+        return _self.gameScope.shoot_4;
     };
     
     _self.addVenon = function() {
@@ -101,8 +91,31 @@ function NaveUtils(thisGame) {
         _self.gameScope.shoot_5.animations.play('st5', 8, true);
         _self.gameScope.shoot_5.scale.set(3);
         _self.gameScope.shoot_5.anchor.setTo(1, 0.5);
+        
+        return _self.gameScope.shoot_5;
     };
     
+    
+    // a chance é o máximo em random, a % de chances varia pelo espaço ocupado
+    // com 160 no max as chances de VENON é uma média de 3,125%
+    _self.skills = [
+        // {nome, chances de ativar, tempo de recarga em milisegundos, função de criação, objetos em mundo, velocidade do tiro}
+        {name: "LANÇA \nEX", chance: [21, 45], time: 1200, func: _self.addSpearEX, objetos: [], speed: 1.4, limitX: 0, rotation: 0}, // 25x
+        {name: "BLACK \nHOLE", chance: [6, 20], time: 15000, func: _self.addBlackHole, objetos: [], speed: 0.4, limitX: _self.gameScope.world.centerX - 40, rotation: 0.10}, // 15x
+        {name: "FIRE", chance: [76, 105], time: 2300, func: _self.addFire, objetos: [], speed: 0.8, limitX: 0, rotation: 0}, // 30x
+        {name: "ICE", chance: [106, 130], time: 6000, func: _self.addIce, objetos: [], speed: 0, limitX: 0, rotation: 0}, // 25x
+        {name: "THUNDER", chance: [46, 75], time: 3300, func: _self.addThunder, objetos: [], speed: 3, limitX: 0, rotation: 0}, // 30x
+        {name: "VENON", chance: [0, 5], time: 18000, func: _self.addVenon, objetos: [], speed: 0.2, limitX: _self.gameScope.world.centerX + 70, rotation: 0} // 5x
+    ];
+    
+    // os espaços movimentados ficam apenas em Y
+    // os mosquitos se movimentam em X mas eles só possuem posições Y
+    // que o player possa andar
+    _self.movimentacao = {
+        blocosMovimentos: [160, 200, 240, 280, 320],
+        blocoAtual: 0,
+        mover: 0 // 1 sobe, -1 desce, 0 parado
+    };
     _self.getRandomSkill = function() {
         var num = Math.floor(Math.random() * _self.skillMAX);
 
@@ -211,19 +224,32 @@ function NaveUtils(thisGame) {
         _self.gameScope.reloading.visible = true;
         _self.hideSkills();
         gameItens.textAcSkill.setText('???');
-
+        
         _self.gameScope.time.events.add(Phaser.Timer.SECOND * 3, function(){
+            _self.gameScope.time.events.remove(_self.skillTimerEvent);
             _self.skillNumber = _self.getRandomSkill();
             _self.gameScope.reloading.visible = false;
             _self.gameScope['sk_'+_self.skillNumber].visible = true;
             gameItens.textAcSkill.setText(_self.skills[_self.skillNumber].name);
+            _self.dispararSkill(_self.skills[_self.skillNumber].time);
             _self.reloading = false;
         }, _self.gameScope);
         
     };
     
+    // ATENÇÃO: Função recursiva!
+    _self.dispararSkill = function(shootTime) {
+        _self.skillTimerEvent = _self.gameScope.time.events.add(shootTime, function(){
+            _self.skills[_self.skillNumber].objetos.push(
+                _self.skills[_self.skillNumber].func()
+            );
+            _self.dispararSkill(_self.skills[_self.skillNumber].time);
+        }, _self.gameScope);
+    };
+    
     _self.movimentarSoldado = function() {
         if(_self.movimentacao.mover != 0) {
+            _self.skillTimerEvent.timer.pause();
             if(_self.movimentacao.mover > 0) {
                 // subir
                 if(_self.movimentacao.blocoAtual >= 0) {
@@ -252,8 +278,46 @@ function NaveUtils(thisGame) {
                 }
             }
         } else {
+            _self.skillTimerEvent.timer.resume();
             _self.gameScope.soldier.animations.frame = 13;        
         }
+    };
+    
+    _self.movimentarSkills = function() {
+        for(var i in _self.skills) {
+            if(_self.skills[i].objetos.length > 0) {
+                for(var j in _self.skills[i].objetos) {
+                    var objShoot = _self.skills[i].objetos[j];
+                    if(objShoot.x > _self.skills[i].limitX) {
+                        objShoot.x -= _self.skills[i].speed;
+                    }
+                    objShoot.rotation += _self.skills[i].rotation;
+                        
+                    if(i == 1 || i == 3 || i == 5) {
+                        if(_self.skills[i].speed == 0) {
+                            _self.fadeSkill(objShoot);
+                        } else {
+                            if(objShoot.x <= _self.skills[i].limitX) {
+                                _self.fadeSkill(objShoot);
+                            }
+                        }
+                    } else {
+                        if(objShoot.x <= 0) {
+                            objShoot.destroy(); // elimina da memória
+                        }
+                    }
+                }
+            }
+        }
+    };
+    
+    _self.fadeSkill = function(item) {
+        var tween = _self.gameScope.add.tween(item);
+        tween.to( { alpha: 0 }, 3000, Phaser.Easing.Linear.None);
+        tween.onComplete.add(function() {
+            item.destroy();
+        }, _self.gameScope);
+        tween.start();
     };
     
 }

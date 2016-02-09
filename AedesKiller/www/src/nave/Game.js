@@ -134,13 +134,7 @@ BasicGame.Game.prototype = {
         this.reloadBtn.anchor.set(0.5);
         this.reloadBtn.scale.set(0.4);
         
-        //naveUtils.addSpearEX();
-        //naveUtils.addBlackHole();
-        //naveUtils.addFire();
-        //naveUtils.addIce();
-        //naveUtils.addThunder();
-        //naveUtils.addVenon();
-        
+        naveUtils.dispararSkill(naveUtils.skills[naveUtils.skillNumber].time);
     },
 
     gameResized: function (width, height) {
@@ -156,6 +150,7 @@ BasicGame.Game.prototype = {
     update: function() {
         this.reloading.rotation += 0.10;
         naveUtils.movimentarSoldado();
+        naveUtils.movimentarSkills();
     }, 
     
     render: function() {
