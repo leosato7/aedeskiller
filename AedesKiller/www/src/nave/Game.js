@@ -70,10 +70,17 @@ BasicGame.Game.prototype = {
         this.load.image('sk_3', '../asset/nave/skills/ice.png');
         this.load.image('sk_4', '../asset/nave/skills/thunder.png');
         this.load.image('sk_5', '../asset/nave/skills/venon.png');
+        
+        this.load.spritesheet('shoot_0', '../asset/nave/shoots/spear-ex.png', 27.25, 25, 8);
+        this.load.image('shoot_1', '../asset/nave/shoots/black-hole.png');
+        this.load.spritesheet('shoot_2', '../asset/nave/shoots/fire.png', 33, 16.5, 8);
+        this.load.spritesheet('shoot_3', '../asset/nave/shoots/ice.png', 199, 28, 2);
+        this.load.spritesheet('shoot_4', '../asset/nave/shoots/thunder.png', 101, 15, 2);
+        this.load.spritesheet('shoot_5', '../asset/nave/shoots/venon.png', 56.25, 89, 4);
     },
 
     create: function () {
-        
+               
         this.fundo = this.add.sprite(
            this.world.centerX, // (centerX, centerY) is the center coordination
             this.world.centerY,
@@ -126,6 +133,13 @@ BasicGame.Game.prototype = {
             
         this.reloadBtn.anchor.set(0.5);
         this.reloadBtn.scale.set(0.4);
+        
+        //naveUtils.addSpearEX();
+        //naveUtils.addBlackHole();
+        //naveUtils.addFire();
+        //naveUtils.addIce();
+        //naveUtils.addThunder();
+        //naveUtils.addVenon();
         
     },
 

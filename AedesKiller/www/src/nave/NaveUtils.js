@@ -6,15 +6,15 @@ function NaveUtils(thisGame) {
     _self.reloading = false; // bloqueio, evita bugs.
     
     // a chance é o máximo em random, a % de chances varia pelo espaço ocupado
-    // com 160 no max as chances de VENON é de 3,125%
+    // com 160 no max as chances de VENON é uma média de 3,125%
     _self.skills = [
-        // {nome, chances de ativar, tempo de recarga em segundos}
-        {name: "LANÇA \nEX", chance: [21, 45], time: 2}, // 25x
-        {name: "BLACK \nHOLE", chance: [6, 20], time: 40}, // 15x
-        {name: "FIRE", chance: [76, 105], time: 3}, // 30x
-        {name: "ICE", chance: [106, 130], time: 9}, // 25x
-        {name: "THUNDER", chance: [46, 75], time: 5}, // 30x
-        {name: "VENON", chance: [0, 5], time: 23} // 5x
+        // {nome, chances de ativar, tempo de recarga em segundos, função de criação, objetos em mundo, velocidade}
+        {name: "LANÇA \nEX", chance: [21, 45], time: 2, func: _self.addSpearEX, objetos: [], speed: 1}, // 25x
+        {name: "BLACK \nHOLE", chance: [6, 20], time: 40, func: _self.addBlackHole, objetos: [], speed: 1}, // 15x
+        {name: "FIRE", chance: [76, 105], time: 3, func: _self.addFire, objetos: [], speed: 1}, // 30x
+        {name: "ICE", chance: [106, 130], time: 9, func: _self.addIce, objetos: [], speed: 1}, // 25x
+        {name: "THUNDER", chance: [46, 75], time: 5, func: _self.addThunder, objetos: [], speed: 1}, // 30x
+        {name: "VENON", chance: [0, 5], time: 23, func: _self.addVenon, objetos: [], speed: 1} // 5x
     ];
     
     // os espaços movimentados ficam apenas em Y
@@ -24,6 +24,83 @@ function NaveUtils(thisGame) {
         blocosMovimentos: [160, 200, 240, 280, 320],
         blocoAtual: 0,
         mover: 0 // 1 sobe, -1 desce, 0 parado
+    };
+    
+    _self.addSpearEX = function() {
+        _self.gameScope.shoot_0 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x - 25, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_0'
+        );
+        
+        _self.gameScope.shoot_0.animations.frame = 0;
+        _self.gameScope.shoot_0.scale.set(-1);
+        _self.gameScope.shoot_0.anchor.setTo(1);
+        
+        _self.gameScope.shoot_0.x--;
+    };
+    
+    _self.addBlackHole = function() {
+        _self.gameScope.shoot_1 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_1'
+        );
+        
+        //_self.gameScope.shoot_1.scale.set(1);
+        _self.gameScope.shoot_1.anchor.setTo(1, 0.5);
+    };
+    
+    _self.addFire = function() {
+        _self.gameScope.shoot_2 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_2'
+        );
+        
+        _self.gameScope.shoot_2.animations.add('st2', [0, 1, 2, 3, 4, 5, 6, 7]);
+        _self.gameScope.shoot_2.animations.play('st2', 10, true);
+        _self.gameScope.shoot_2.scale.set(1.4);
+        _self.gameScope.shoot_2.anchor.setTo(1, 0);
+    };
+    
+    _self.addIce = function() {
+        _self.gameScope.shoot_3 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_3'
+        );
+        
+        _self.gameScope.shoot_3.animations.add('st3', [0, 1]);
+        _self.gameScope.shoot_3.animations.play('st3', 5, true);
+        _self.gameScope.shoot_3.scale.setTo(-3, 6);
+        _self.gameScope.shoot_3.anchor.setTo(0, 0.5);
+    };
+    
+    _self.addThunder = function() {
+        _self.gameScope.shoot_4 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_4'
+        );
+        
+        _self.gameScope.shoot_4.animations.add('st4', [0, 1]);
+        _self.gameScope.shoot_4.animations.play('st4', 5, true);
+        _self.gameScope.shoot_4.scale.set(0.8);
+        _self.gameScope.shoot_4.anchor.setTo(1, 0);
+    };
+    
+    _self.addVenon = function() {
+        _self.gameScope.shoot_5 = _self.gameScope.add.sprite(
+            _self.gameScope.soldier.x, // (centerX, centerY) is the center coordination
+            _self.gameScope.soldier.y,
+            'shoot_5'
+        );
+        
+        _self.gameScope.shoot_5.animations.add('st5', [0, 1, 2, 3]);
+        _self.gameScope.shoot_5.animations.play('st5', 8, true);
+        _self.gameScope.shoot_5.scale.set(3);
+        _self.gameScope.shoot_5.anchor.setTo(1, 0.5);
     };
     
     _self.getRandomSkill = function() {
