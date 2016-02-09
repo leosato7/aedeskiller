@@ -63,6 +63,7 @@ BasicGame.Game.prototype = {
         this.load.spritesheet('casas', '../asset/nave/casas-sprite.png', 46.3, 59.5, 114);
         this.load.image('reload', '../asset/nave/reload.png');
         this.load.image('reloading', '../asset/nave/reloading.png');
+        this.load.spritesheet('mosquito', '../asset/nave/mosquitos-sprite.png', 32, 32, 96);
         
         this.load.image('sk_0', '../asset/nave/skills/EX-lancer.png');
         this.load.image('sk_1', '../asset/nave/skills/black-hole.png');
@@ -106,7 +107,7 @@ BasicGame.Game.prototype = {
         
         this.soldier = this.add.sprite(
             this.world.width - gameItens.graphics.width - 90,
-            180, 
+            naveUtils.movimentacao.blocosMovimentos[0], 
             'soldier'
         );
         
@@ -133,6 +134,14 @@ BasicGame.Game.prototype = {
             
         this.reloadBtn.anchor.set(0.5);
         this.reloadBtn.scale.set(0.4);
+        
+        
+        this.mosquito = this.add.sprite(
+           0, // (centerX, centerY) is the center coordination
+            naveUtils.movimentacao.blocosMovimentos[0],
+            'mosquito'
+        );
+        this.mosquito.animations.frame = 25;
         
         naveUtils.dispararSkill(naveUtils.skills[naveUtils.skillNumber].time);
     },
