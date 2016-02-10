@@ -8,6 +8,8 @@ var naveUtils;
 var gameItens = {};
 gameItens.acmenu = null;
 gameItens.graphics = null;
+gameItens.chargeBar = null;
+gameItens.textChargeBar = "";
 gameItens.textAcSkill = "";
 
 // create Game function in BasicGame
@@ -94,6 +96,7 @@ BasicGame.Game.prototype = {
         
         naveUtils.actionMenu();
         naveUtils.addSkills();
+        naveUtils.skillCharging();
 
         naveUtils.criarCasa(-46.3, 160, 5);
         naveUtils.criarCasa(-46.3, 190, 6);
@@ -163,7 +166,12 @@ BasicGame.Game.prototype = {
     }, 
     
     render: function() {
-        
+        var sec = Math.floor((naveUtils.skillTimerEvent.timer.duration / 1000) % 60);
+        if(!naveUtils.reloading) {
+            naveUtils.abrirChargeTime(sec);
+        } else {
+            naveUtils.removerChargeTime();
+        }
     },
     
     pause: function() {

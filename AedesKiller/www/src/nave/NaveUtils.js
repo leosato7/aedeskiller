@@ -101,11 +101,11 @@ function NaveUtils(thisGame) {
     _self.skills = [
         // {nome, chances de ativar, tempo de recarga em milisegundos, função de criação, objetos em mundo, velocidade do tiro}
         {name: "LANÇA \nEX", chance: [21, 45], time: 1200, func: _self.addSpearEX, objetos: [], speed: 1.4, limitX: 0, rotation: 0}, // 25x
-        {name: "BLACK \nHOLE", chance: [6, 20], time: 15000, func: _self.addBlackHole, objetos: [], speed: 0.4, limitX: _self.gameScope.world.centerX - 40, rotation: 0.10}, // 15x
+        {name: "BLACK \nHOLE", chance: [6, 20], time: 13000, func: _self.addBlackHole, objetos: [], speed: 0.4, limitX: _self.gameScope.world.centerX - 40, rotation: 0.10}, // 15x
         {name: "FIRE", chance: [76, 105], time: 2300, func: _self.addFire, objetos: [], speed: 0.8, limitX: 0, rotation: 0}, // 30x
-        {name: "ICE", chance: [106, 130], time: 6000, func: _self.addIce, objetos: [], speed: 0, limitX: 0, rotation: 0}, // 25x
+        {name: "ICE", chance: [106, 130], time: 5500, func: _self.addIce, objetos: [], speed: 0, limitX: 0, rotation: 0}, // 25x
         {name: "THUNDER", chance: [46, 75], time: 3300, func: _self.addThunder, objetos: [], speed: 3, limitX: 0, rotation: 0}, // 30x
-        {name: "VENON", chance: [0, 5], time: 18000, func: _self.addVenon, objetos: [], speed: 0.2, limitX: _self.gameScope.world.centerX + 70, rotation: 0} // 5x
+        {name: "VENON", chance: [0, 5], time: 16000, func: _self.addVenon, objetos: [], speed: 0.2, limitX: _self.gameScope.world.centerX + 70, rotation: 0} // 5x
     ];
     
     // os espaços movimentados ficam apenas em Y
@@ -213,8 +213,32 @@ function NaveUtils(thisGame) {
             }
         );
 
-        gameItens.textAcSkill.anchor.setTo(0.5, 0);
-        
+        gameItens.textAcSkill.anchor.setTo(0.5, 0);        
+    };
+    
+    _self.skillCharging = function() {
+        gameItens.textChargeBar = _self.gameScope.add.text(
+            gameItens.graphics.x + (gameItens.graphics.width / 2),
+            5,
+            "", 
+            {
+                font: "15px Arial",
+                fill: "#00f400",
+                align: "center"
+            }
+        );
+
+        gameItens.textChargeBar.anchor.setTo(0.5, 0);
+    };
+    
+    _self.abrirChargeTime = function(txt) {
+        gameItens.textChargeBar.visible = true;
+        gameItens.textChargeBar.setText(txt + 's');
+    };
+    
+    _self.removerChargeTime = function() {
+        gameItens.textChargeBar.visible = false;
+        gameItens.textChargeBar.setText('');
     };
     
     _self.reload = function() {
@@ -240,6 +264,7 @@ function NaveUtils(thisGame) {
     // ATENÇÃO: Função recursiva!
     _self.dispararSkill = function(shootTime) {
         _self.skillTimerEvent = _self.gameScope.time.events.add(shootTime, function(){
+            _self.removerChargeTime();
             _self.skills[_self.skillNumber].objetos.push(
                 _self.skills[_self.skillNumber].func()
             );
