@@ -169,6 +169,7 @@ BasicGame.Game.prototype = {
         var sec = Math.floor((naveUtils.skillTimerEvent.timer.duration / 1000) % 60);
         if(!naveUtils.reloading) {
             naveUtils.abrirChargeTime(sec);
+            naveUtils.limparSkillArray(naveUtils.skillNumber);
         } else {
             naveUtils.removerChargeTime();
         }

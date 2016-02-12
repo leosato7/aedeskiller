@@ -251,6 +251,7 @@ function NaveUtils(thisGame) {
         
         _self.gameScope.time.events.add(Phaser.Timer.SECOND * 3, function(){
             _self.gameScope.time.events.remove(_self.skillTimerEvent);
+            _self.limparSkillArray(_self.skillNumber);
             _self.skillNumber = _self.getRandomSkill();
             _self.gameScope.reloading.visible = false;
             _self.gameScope['sk_'+_self.skillNumber].visible = true;
@@ -343,6 +344,18 @@ function NaveUtils(thisGame) {
             item.destroy();
         }, _self.gameScope);
         tween.start();
+    };
+    
+    // ATENÇÃO COM ESTA FUNÇÃO, ELA ALIVIA A MÉMORIA EM 2 CASOS CRÍTICOS
+    // 1 - A CADA VEZ QUE A SKILL É TROCADA LIMPANDO O ARRAY DA SKILL ANTIGA
+    // 2 - NO RENDER IMPEDE QUE O ARRAY SE ACUMULE EM ESCALA MAIOR DO QUE A VISIVEL NO PALCO MAS SÓ VALE PARA A POSIÇÃO DA SKILL
+    // AS DEMAIS JÁ SÃO LIMPADAS PELO CASO 1 ESTARÃO MENORES QUE 5 OU 6 ELEMENTOS SENDO ASSIM NÃO SERÁ GRANDE PROBLEMA.
+    _self.limparSkillArray = function(numeroSkill) {
+        for(var j in _self.skills[numeroSkill].objetos) {
+            if(!_self.skills[numeroSkill].objetos[j].alive) {
+                _self.skills[numeroSkill].objetos.splice(j, 1);
+            }
+        }
     };
     
 }
