@@ -142,38 +142,13 @@ BasicGame.Game.prototype = {
         this.reloadBtn.scale.set(0.4);
         
         
-        this.mosquitoDengao = this.add.sprite(
-           0, // (centerX, centerY) is the center coordination
-            naveUtils.movimentacao.blocosMovimentos[0],
-            'mosquito_boss_2'
-        );
-        this.mosquitoDengao.scale.set(0.4);
-        
-        
-        this.mosquitoDengueBoss = this.add.sprite(
-           0, // (centerX, centerY) is the center coordination
-            naveUtils.movimentacao.blocosMovimentos[2],
-            'mosquito_boss_1'
-        );
-        this.mosquitoDengueBoss.scale.set(0.2);
-        
-        
-        this.mosquitoDengue = this.add.sprite(
-           0, // (centerX, centerY) is the center coordination
-            naveUtils.movimentacao.blocosMovimentos[3],
-            'mosquito'
-        );
-        this.mosquitoDengue.animations.frame = 73;
-        
-        
-        this.mosquito = this.add.sprite(
-           0, // (centerX, centerY) is the center coordination
-            naveUtils.movimentacao.blocosMovimentos[4],
-            'mosquito'
-        );
-        this.mosquito.animations.frame = 25;
+//        naveUtils.addInimigo(3, naveUtils.movimentacao.blocosMovimentos[0]);
+//        naveUtils.addInimigo(2, naveUtils.movimentacao.blocosMovimentos[1]);
+//        naveUtils.addInimigo(0, naveUtils.movimentacao.blocosMovimentos[2]);
+//        naveUtils.addInimigo(1, naveUtils.movimentacao.blocosMovimentos[3]);
         
         naveUtils.dispararSkill(naveUtils.skills[naveUtils.skillNumber].time);
+        naveUtils.nascerInimigo(1000);
     },
 
     gameResized: function (width, height) {
@@ -190,6 +165,7 @@ BasicGame.Game.prototype = {
         this.reloading.rotation += 0.10;
         naveUtils.movimentarSoldado();
         naveUtils.movimentarSkills();
+        naveUtils.movimentarInimigos();
     }, 
     
     render: function() {
