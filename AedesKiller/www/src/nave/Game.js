@@ -176,6 +176,8 @@ BasicGame.Game.prototype = {
         } else {
             naveUtils.removerChargeTime();
         }
+        
+        naveUtils.limparInimigosArray();
     },
     
     pause: function() {

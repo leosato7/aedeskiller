@@ -2,6 +2,34 @@ function Utils() {
     var _self = this;
     _self.message;
     
+    
+    /* 
+     * @func: (<Int> initLimit, <Int> endLimit)
+     * @descr: Retorna um tempo entre os limites enviados
+     * @returns <Int> time
+     */
+    _self.getRandomTime = function(initLimit, endLimit) {
+        
+    };
+    
+    /* 
+     * @func: (<Int> initLimit, <Int> endLimit)
+     * @descr: Retorna um tempo entre os limites enviados
+     * @returns <Int> time
+     */
+    _self.getRandomEnemy = function() {
+        
+    };
+    
+    /* 
+     * @func: (<Int> initLimit, <Int> endLimit)
+     * @descr: Retorna um tempo entre os limites enviados
+     * @returns <Int> time
+     */
+    _self.getRandomPositionY = function() {
+        
+    }
+    
     /* 
      * @func: replaceAllString(String contentVal, String oldVal, String newVal)
      * @descr: faz replace em todos os locais onde for encontrado o oldVal.

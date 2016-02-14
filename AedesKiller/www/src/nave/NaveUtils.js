@@ -132,8 +132,8 @@ function NaveUtils(thisGame) {
     
     _self.inimigos = {
         medio: [
-            {name: "Mosquito", chance: [], func: _self.addInimigo, objetos:[], speed: 0.4, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
-            {name: "Dengue", chance: [], func: _self.addInimigo, objetos:[], speed: 1, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Mosquito", chance: [], func: _self.addInimigo, objetos:[], speed: 0.7, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Dengue", chance: [], func: _self.addInimigo, objetos:[], speed: 2.3, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
             {name: "Dengão", chance: [], func: _self.addInimigo, objetos:[], speed: 0.4, spritePos: [0, 1, 2, 3, 4], sprite: 'mosquito_boss_1', scale: 0.4, anchorY: 0.5},
             {name: "Dengão Mortífero", chance: [], func: _self.addInimigo, objetos:[], speed: 0.2, spritePos: [], sprite: 'mosquito_boss_2', scale: 0.6, anchorY: 0.7}
         ],
@@ -302,7 +302,7 @@ function NaveUtils(thisGame) {
     _self.nascerInimigo = function(time) {
         _self.inimigoTimerEvent = _self.gameScope.time.events.add(time, function(){
             
-            // são 2 random, 1 para o inimigo e outro para o local
+            // são 3 random, 1 para o inimigo, tempo e outro para o local
             var dados = {
                 sprite: _self.inimigos[_self.dificuldade][0].func(0, _self.movimentacao.blocosMovimentos[2]),
                 life: 10,
@@ -368,7 +368,7 @@ function NaveUtils(thisGame) {
             if(_self.inimigos[_self.dificuldade][i].objetos.length > 0) {
                 for(var j in _self.inimigos[_self.dificuldade][i].objetos){
                     var limit = (_self.gameScope.world.width - gameItens.graphics.width) - 50;
-                    _self.inimigos[_self.dificuldade][i].objetos[j].sprite.x++;
+                    _self.inimigos[_self.dificuldade][i].objetos[j].sprite.x += _self.inimigos[_self.dificuldade][i].speed;
 
                     if(_self.inimigos[_self.dificuldade][i].objetos[j].sprite.x >= limit) {
                         _self.inimigos[_self.dificuldade][i].objetos[j].sprite.destroy(); // elimina da memória
@@ -424,6 +424,19 @@ function NaveUtils(thisGame) {
         for(var j in _self.skills[numeroSkill].objetos) {
             if(!_self.skills[numeroSkill].objetos[j].alive) {
                 _self.skills[numeroSkill].objetos.splice(j, 1);
+            }
+        }
+    };
+    
+    // LIMPA DA MEMÓRIA ARRAY DE INIMIGOS QUE NÃO ESTÃO VIVOS
+    _self.limparInimigosArray = function() {
+        for(var i in _self.inimigos[_self.dificuldade]) {
+            if(_self.inimigos[_self.dificuldade][i].objetos.length > 0) {
+                for(var j in _self.inimigos[_self.dificuldade][i].objetos){
+                    if(!_self.inimigos[_self.dificuldade][i].objetos[j].sprite.alive) {
+                        _self.inimigos[_self.dificuldade][i].objetos.splice(j, 1); // elimina da memória
+                    }
+                }
             }
         }
     };
