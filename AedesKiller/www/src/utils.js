@@ -1,34 +1,16 @@
+// LEMBRAR QUE ESSA FUNÇÃO DEPENDE DA LANG.JS
 function Utils() {
     var _self = this;
     _self.message;
     
-    
     /* 
-     * @func: (<Int> initLimit, <Int> endLimit)
-     * @descr: Retorna um tempo entre os limites enviados
-     * @returns <Int> time
+     * @func: (<Int> max)
+     * @descr: Retorna um número até o limite indicado
+     * @returns <Int> num
      */
-    _self.getRandomTime = function(initLimit, endLimit) {
-        
+    _self.getRandomNumber = function(max) {
+        return Math.floor(Math.random() * max);
     };
-    
-    /* 
-     * @func: (<Int> initLimit, <Int> endLimit)
-     * @descr: Retorna um tempo entre os limites enviados
-     * @returns <Int> time
-     */
-    _self.getRandomEnemy = function() {
-        
-    };
-    
-    /* 
-     * @func: (<Int> initLimit, <Int> endLimit)
-     * @descr: Retorna um tempo entre os limites enviados
-     * @returns <Int> time
-     */
-    _self.getRandomPositionY = function() {
-        
-    }
     
     /* 
      * @func: replaceAllString(String contentVal, String oldVal, String newVal)

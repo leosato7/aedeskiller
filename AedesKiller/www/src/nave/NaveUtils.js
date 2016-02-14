@@ -132,17 +132,18 @@ function NaveUtils(thisGame) {
     
     _self.inimigos = {
         medio: [
-            {name: "Mosquito", chance: [], func: _self.addInimigo, objetos:[], speed: 0.7, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
-            {name: "Dengue", chance: [], func: _self.addInimigo, objetos:[], speed: 2.3, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
-            {name: "Dengão", chance: [], func: _self.addInimigo, objetos:[], speed: 0.4, spritePos: [0, 1, 2, 3, 4], sprite: 'mosquito_boss_1', scale: 0.4, anchorY: 0.5},
-            {name: "Dengão Mortífero", chance: [], func: _self.addInimigo, objetos:[], speed: 0.2, spritePos: [], sprite: 'mosquito_boss_2', scale: 0.6, anchorY: 0.7}
+            {name: "Mosquito", chance: [101, 200], func: _self.addInimigo, objetos:[], speed: 0.7, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Dengue", chance: [27, 100], func: _self.addInimigo, objetos:[], speed: 1.8, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Dengão", chance: [6, 26], func: _self.addInimigo, objetos:[], speed: 0.5, spritePos: [0, 1, 2, 3, 4], sprite: 'mosquito_boss_1', scale: 0.4, anchorY: 0.5},
+            {name: "Dengão Mortífero", chance: [0,5], func: _self.addInimigo, objetos:[], speed: 0.2, spritePos: [], sprite: 'mosquito_boss_2', scale: 0.6, anchorY: 0.7}
         ],
         dificil: [
-            {name: "Mosquito", chance: [], func: _self.addInimigo, objetos:[], speed: 0.6, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
-            {name: "Dengue", chance: [], func: _self.addInimigo, objetos:[], speed: 2, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
-            {name: "Dengão", chance: [], func: _self.addInimigo, objetos:[], speed: 0.6, spritePos: [0, 1, 2, 3, 4], sprite: 'mosquito_boss_1', scale: 0.4, anchorY: 0.5},
-            {name: "Dengão Mortífero", chance: [], func: _self.addInimigo, objetos:[], speed: 0.3, spritePos: [], sprite: 'mosquito_boss_2', scale: 0.6, anchorY: 0.7}
-        ]     
+            {name: "Mosquito", chance: [43, 60], func: _self.addInimigo, objetos:[], speed: 0.6, spritePos: [24, 25, 26], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Dengue", chance: [21, 42], func: _self.addInimigo, objetos:[], speed: 2, spritePos: [72, 73, 74], sprite: 'mosquito', scale: 1, anchorY: 0},
+            {name: "Dengão", chance: [9, 20], func: _self.addInimigo, objetos:[], speed: 0.6, spritePos: [0, 1, 2, 3, 4], sprite: 'mosquito_boss_1', scale: 0.4, anchorY: 0.5},
+            {name: "Dengão Mortífero", chance: [0, 8], func: _self.addInimigo, objetos:[], speed: 0.3, spritePos: [], sprite: 'mosquito_boss_2', scale: 0.6, anchorY: 0.7}
+        ],
+        chanceLimit: {medio: 200, dificil: 60}
     };
     
     // os espaços movimentados ficam apenas em Y
@@ -153,11 +154,27 @@ function NaveUtils(thisGame) {
         blocoAtual: 0,
         mover: 0 // 1 sobe, -1 desce, 0 parado
     };
+    _self.intervalos = {
+        inimigos: [1000, 1500, 2000, 2300, 2600, 3000]
+    };
+    
     _self.getRandomSkill = function() {
-        var num = Math.floor(Math.random() * _self.skillMAX);
+        var num = utils.getRandomNumber(_self.skillMAX);
 
         for(var i = 0; i<_self.skills.length; i++) {
             if(_self.skills[i].chance[0] <= num && _self.skills[i].chance[1] >= num) {
+                return i;
+            }
+        }
+        
+        return 0;
+    };
+    
+    _self.getRandomEnemy = function() {
+        var num = utils.getRandomNumber(_self.inimigos.chanceLimit[_self.dificuldade]);
+
+        for(var i = 0; i<_self.inimigos[_self.dificuldade].length; i++) {
+            if(_self.inimigos[_self.dificuldade][i].chance[0] <= num && _self.inimigos[_self.dificuldade][i].chance[1] >= num) {
                 return i;
             }
         }
@@ -299,19 +316,22 @@ function NaveUtils(thisGame) {
         
     };
     
+    // são 3 random, 1 para o inimigo, tempo e outro para o local
     _self.nascerInimigo = function(time) {
         _self.inimigoTimerEvent = _self.gameScope.time.events.add(time, function(){
-            
-            // são 3 random, 1 para o inimigo, tempo e outro para o local
+            var randEnemy = _self.getRandomEnemy();
+            var randPos = utils.getRandomNumber(_self.movimentacao.blocosMovimentos.length - 1);
+
             var dados = {
-                sprite: _self.inimigos[_self.dificuldade][0].func(0, _self.movimentacao.blocosMovimentos[2]),
+                sprite: _self.inimigos[_self.dificuldade][randEnemy].func(randEnemy, _self.movimentacao.blocosMovimentos[randPos]),
                 life: 10,
                 effectSprite: null
             };
             
-            _self.inimigos[_self.dificuldade][0].objetos.push(dados);
+            _self.inimigos[_self.dificuldade][randEnemy].objetos.push(dados);
             
-            _self.nascerInimigo(1000);
+            var intervalo = utils.getRandomNumber(_self.intervalos.inimigos.length - 1);
+            _self.nascerInimigo(_self.intervalos.inimigos[intervalo]);
             
         }, _self.gameScope);
     };
