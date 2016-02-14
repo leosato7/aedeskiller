@@ -11,6 +11,9 @@ gameItens.graphics = null;
 gameItens.chargeBar = null;
 gameItens.textChargeBar = "";
 gameItens.textAcSkill = "";
+gameItens.textScore = "";
+gameItens.textMaxScore = "";
+
 
 // create Game function in BasicGame
 BasicGame.Game = function (game) {
@@ -97,6 +100,7 @@ BasicGame.Game.prototype = {
         
         naveUtils = new NaveUtils(this);
         
+        naveUtils.status();
         naveUtils.actionMenu();
         naveUtils.addSkills();
         naveUtils.skillCharging();
@@ -141,14 +145,8 @@ BasicGame.Game.prototype = {
         this.reloadBtn.anchor.set(0.5);
         this.reloadBtn.scale.set(0.4);
         
-        
-//        naveUtils.addInimigo(3, naveUtils.movimentacao.blocosMovimentos[0]);
-//        naveUtils.addInimigo(2, naveUtils.movimentacao.blocosMovimentos[1]);
-//        naveUtils.addInimigo(0, naveUtils.movimentacao.blocosMovimentos[2]);
-//        naveUtils.addInimigo(1, naveUtils.movimentacao.blocosMovimentos[3]);
-        
+        naveUtils.nascerInimigo(1500);
         naveUtils.dispararSkill(naveUtils.skills[naveUtils.skillNumber].time);
-        naveUtils.nascerInimigo(1000);
     },
 
     gameResized: function (width, height) {
@@ -169,7 +167,7 @@ BasicGame.Game.prototype = {
     }, 
     
     render: function() {
-        var sec = Math.floor((naveUtils.skillTimerEvent.timer.duration / 1000) % 60);
+        var sec = naveUtils.timer.duration.toFixed(0);
         if(!naveUtils.reloading) {
             naveUtils.abrirChargeTime(sec);
             naveUtils.limparSkillArray(naveUtils.skillNumber);
@@ -178,6 +176,8 @@ BasicGame.Game.prototype = {
         }
         
         naveUtils.limparInimigosArray();
+        
+        gameItens.textScore.setText("Score: " + naveUtils.score);
     },
     
     pause: function() {

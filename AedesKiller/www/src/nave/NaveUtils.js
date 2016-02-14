@@ -6,7 +6,10 @@ function NaveUtils(thisGame) {
     _self.reloading = false; // bloqueio, evita bugs.
     _self.skillTimerEvent = null;
     _self.inimigoTimerEvent = null;
+    _self.timer = null;
     _self.dificuldade = 'medio';
+    _self.score = 0;
+    _self.maxScore = 0;
     
     
     _self.addSpearEX = function() {
@@ -17,7 +20,7 @@ function NaveUtils(thisGame) {
         );
         
         _self.gameScope.shoot_0.animations.frame = 0;
-        _self.gameScope.shoot_0.scale.set(-1);
+        _self.gameScope.shoot_0.scale.set(-0.8);
         _self.gameScope.shoot_0.anchor.setTo(1);
         
         _self.gameScope.shoot_0.x--;
@@ -33,6 +36,7 @@ function NaveUtils(thisGame) {
         );
         
         _self.gameScope.shoot_1.anchor.setTo(0.5, 0.5);
+        _self.gameScope.shoot_1.scale.set(0.5);
         
         return _self.gameScope.shoot_1;
     };
@@ -61,8 +65,8 @@ function NaveUtils(thisGame) {
         
         _self.gameScope.shoot_3.animations.add('st3', [0, 1]);
         _self.gameScope.shoot_3.animations.play('st3', 5, true);
-        _self.gameScope.shoot_3.scale.setTo(-3, 6);
-        _self.gameScope.shoot_3.anchor.setTo(0, 0.5);
+        _self.gameScope.shoot_3.scale.setTo(3, 4.3);
+        _self.gameScope.shoot_3.anchor.setTo(1, 0.5);
         
         return _self.gameScope.shoot_3;
     };
@@ -91,7 +95,7 @@ function NaveUtils(thisGame) {
         
         _self.gameScope.shoot_5.animations.add('st5', [0, 1, 2, 3]);
         _self.gameScope.shoot_5.animations.play('st5', 8, true);
-        _self.gameScope.shoot_5.scale.set(3);
+        _self.gameScope.shoot_5.scale.set(2);
         _self.gameScope.shoot_5.anchor.setTo(1, 0.5);
         
         return _self.gameScope.shoot_5;
@@ -122,12 +126,12 @@ function NaveUtils(thisGame) {
     // com 160 no max as chances de VENON é uma média de 3,125%
     _self.skills = [
         // {nome, chances de ativar, tempo de recarga em milisegundos, função de criação, objetos em mundo, velocidade do tiro}
-        {name: "LANÇA \nEX", chance: [21, 45], time: 1200, func: _self.addSpearEX, objetos: [], speed: 1.4, limitX: 0, rotation: 0}, // 25x
-        {name: "BLACK \nHOLE", chance: [6, 20], time: 13000, func: _self.addBlackHole, objetos: [], speed: 0.4, limitX: _self.gameScope.world.centerX - 40, rotation: 0.10}, // 15x
-        {name: "FIRE", chance: [76, 105], time: 2300, func: _self.addFire, objetos: [], speed: 0.8, limitX: 0, rotation: 0}, // 30x
-        {name: "ICE", chance: [106, 130], time: 5500, func: _self.addIce, objetos: [], speed: 0, limitX: 0, rotation: 0}, // 25x
-        {name: "THUNDER", chance: [46, 75], time: 3300, func: _self.addThunder, objetos: [], speed: 3, limitX: 0, rotation: 0}, // 30x
-        {name: "VENON", chance: [0, 5], time: 16000, func: _self.addVenon, objetos: [], speed: 0.2, limitX: _self.gameScope.world.centerX + 70, rotation: 0} // 5x
+        {name: "LANÇA \nEX", chance: [21, 45], time: 1200, func: _self.addSpearEX, objetos: [], speed: 1.4, limitX: 0, rotation: 0, dmg: 10, explode: true}, // 25x
+        {name: "BLACK \nHOLE", chance: [6, 20], time: 8000, func: _self.addBlackHole, objetos: [], speed: 0.4, limitX: _self.gameScope.world.centerX - 40, rotation: 0.10, dmg: 80, explode: false}, // 15x
+        {name: "FIRE", chance: [76, 105], time: 1600, func: _self.addFire, objetos: [], speed: 0.8, limitX: 0, rotation: 0, dmg: 15, explode: true}, // 30x
+        {name: "ICE", chance: [106, 130], time: 3300, func: _self.addIce, objetos: [], speed: 0, limitX: 0, rotation: 0, dmg: 40, explode: false}, // 25x
+        {name: "THUNDER", chance: [46, 75], time: 2300, func: _self.addThunder, objetos: [], speed: 3.3, limitX: 0, rotation: 0, dmg: 20, explode: false}, // 30x
+        {name: "VENON", chance: [0, 5], time: 9000, func: _self.addVenon, objetos: [], speed: 0.2, limitX: _self.gameScope.world.centerX + 70, rotation: 0, dmg: 99, explode: false} // 5x
     ];
     
     _self.inimigos = {
@@ -222,6 +226,34 @@ function NaveUtils(thisGame) {
         if(_self.movimentacao.mover != 0) return;
         _self.gameScope.soldier.animations.play('down', 10, true);
         _self.movimentacao.mover = -1;
+    };
+    
+    _self.status = function() {
+        gameItens.textScore = _self.gameScope.add.text(
+            0,
+            0,
+            "Score: " + _self.score, 
+            {
+                font: "15px Arial",
+                fill: "#000000",
+                align: "left"
+            }
+        );
+
+        gameItens.textScore.anchor.setTo(0, 0);
+        
+        gameItens.textMaxScore = _self.gameScope.add.text(
+            0,
+            gameItens.textScore.height,
+            "Max Score: " + _self.maxScore, 
+            {
+                font: "15px Arial",
+                fill: "#000000",
+                align: "left"
+            }
+        );
+
+        gameItens.textMaxScore.anchor.setTo(0, 0);
     };
     
     _self.actionMenu = function() {
@@ -338,6 +370,9 @@ function NaveUtils(thisGame) {
     
     // ATENÇÃO: Função recursiva!
     _self.dispararSkill = function(shootTime) {
+        _self.timer = _self.gameScope.time.create(false);
+        _self.timer.add(shootTime, function(){}, _self.gameScope);
+        _self.timer.start();
         _self.skillTimerEvent = _self.gameScope.time.events.add(shootTime, function(){
             _self.removerChargeTime();
             _self.skills[_self.skillNumber].objetos.push(
@@ -349,7 +384,10 @@ function NaveUtils(thisGame) {
     
     _self.movimentarSoldado = function() {
         if(_self.movimentacao.mover != 0) {
-            _self.skillTimerEvent.timer.pause();
+            if(_self.timer != null) {
+                _self.timer.pause();
+            }
+            
             if(_self.movimentacao.mover > 0) {
                 // subir
                 if(_self.movimentacao.blocoAtual >= 0) {
@@ -378,9 +416,15 @@ function NaveUtils(thisGame) {
                 }
             }
         } else {
-            _self.skillTimerEvent.timer.resume();
+            if(_self.timer != null) {
+                _self.timer.resume();
+            }
             _self.gameScope.soldier.animations.frame = 13;        
         }
+    };
+    
+    _self.vilaInvadida = function() {
+        location.href = "intro.html";
     };
     
     _self.movimentarInimigos = function() {
@@ -392,6 +436,7 @@ function NaveUtils(thisGame) {
 
                     if(_self.inimigos[_self.dificuldade][i].objetos[j].sprite.x >= limit) {
                         _self.inimigos[_self.dificuldade][i].objetos[j].sprite.destroy(); // elimina da memória
+                        _self.vilaInvadida();
                     }
 
                 }
@@ -399,19 +444,26 @@ function NaveUtils(thisGame) {
         }
     };
     
-    _self.collisionHandler = function(shoot, target) {
-        shoot.kill();
+    _self.collisionHandler = function(shoot, target, skillPos) {
+        var bonus = 0;
+        if(_self.skills[skillPos].explode){
+            shoot.kill();
+            bonus = 5 * skillPos;
+        } else {
+            bonus = 20 * skillPos;            
+        }
         target.kill();
+        _self.score = _self.score + (100 + bonus);
     };
     
-    _self.hitCollisionTest = function(shoot) {
+    _self.hitCollisionTest = function(shoot, skillPos) {
         for(var i in _self.inimigos[_self.dificuldade]) {
             if(_self.inimigos[_self.dificuldade][i].objetos.length > 0) {
                 for(var j in _self.inimigos[_self.dificuldade][i].objetos){
                     if(shoot != null && _self.inimigos[_self.dificuldade][i].objetos[j].sprite != null) {
                         if(_self.inimigos[_self.dificuldade][i].objetos[j].sprite.alive) {
                             if (Phaser.Rectangle.intersects(shoot.getBounds(), _self.inimigos[_self.dificuldade][i].objetos[j].sprite.getBounds()) ) {
-                                _self.collisionHandler(shoot, _self.inimigos[_self.dificuldade][i].objetos[j].sprite);
+                                _self.collisionHandler(shoot, _self.inimigos[_self.dificuldade][i].objetos[j].sprite, skillPos);
                             }
                         }
                     }
@@ -445,7 +497,7 @@ function NaveUtils(thisGame) {
                     }
                     
                     if(objShoot.alive) {
-                        _self.hitCollisionTest(objShoot);
+                        _self.hitCollisionTest(objShoot, i);
                     }
                 }
             }
