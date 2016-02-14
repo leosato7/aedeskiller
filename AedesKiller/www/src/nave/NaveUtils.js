@@ -399,6 +399,27 @@ function NaveUtils(thisGame) {
         }
     };
     
+    _self.collisionHandler = function(shoot, target) {
+        shoot.kill();
+        target.kill();
+    };
+    
+    _self.hitCollisionTest = function(shoot) {
+        for(var i in _self.inimigos[_self.dificuldade]) {
+            if(_self.inimigos[_self.dificuldade][i].objetos.length > 0) {
+                for(var j in _self.inimigos[_self.dificuldade][i].objetos){
+                    if(shoot != null && _self.inimigos[_self.dificuldade][i].objetos[j].sprite != null) {
+                        if(_self.inimigos[_self.dificuldade][i].objetos[j].sprite.alive) {
+                            if (Phaser.Rectangle.intersects(shoot.getBounds(), _self.inimigos[_self.dificuldade][i].objetos[j].sprite.getBounds()) ) {
+                                _self.collisionHandler(shoot, _self.inimigos[_self.dificuldade][i].objetos[j].sprite);
+                            }
+                        }
+                    }
+                }
+            }
+        }        
+    };
+    
     _self.movimentarSkills = function() {
         for(var i in _self.skills) {
             if(_self.skills[i].objetos.length > 0) {
@@ -421,6 +442,10 @@ function NaveUtils(thisGame) {
                         if(objShoot.x <= 0) {
                             objShoot.destroy(); // elimina da memória
                         }
+                    }
+                    
+                    if(objShoot.alive) {
+                        _self.hitCollisionTest(objShoot);
                     }
                 }
             }
