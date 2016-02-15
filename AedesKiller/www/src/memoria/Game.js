@@ -10,6 +10,14 @@ var imgHeight = 208;
 var imgSpace = 3;
 var imgArr = new Array(); 
 var grupo;
+var escolha1 = null;
+var escolha2 = null;
+
+var objEscolha1;
+var objEscolha2;
+
+var ok_moeda;
+var no;
 
 var posicao = new Array(); //[1:{3,3}, ];
 
@@ -126,6 +134,13 @@ BasicGame.Game.prototype = {
         imgArr.push('img6');
         imgArr.push('img7');
         
+        this.load.audio('ok_moeda', '../asset/memoria/ok_moeda.mp3');
+        this.load.audio('mosquito', '../asset/memoria/Fly.mp3');
+        this.load.audio('no', '../asset/memoria/no.mp3');
+        this.load.audio('perdeu', '../asset/memoria/perdeu.mp3');
+        this.load.audio('win1', '../asset/memoria/win1.mp3');
+        this.load.audio('win2', '../asset/memoria/win2.mp3');
+        
         // this.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
         
     },
@@ -134,6 +149,12 @@ BasicGame.Game.prototype = {
        
         grupo = this.add.group();
         
+        ok_moeda = this.add.audio('ok_moeda');
+        ok_moeda.volume = 0.5;
+        
+        no = this.add.audio('no');
+        no.volume = 0.6;
+   
         var arrBusca = new Array();
             arrBusca.push(20);
         
@@ -161,16 +182,16 @@ BasicGame.Game.prototype = {
             var imgObj = this.add.image(posicao_.x, posicao_.y, imgArr[i]);//345, 475
             
             imgObj.scale.setTo(0.14, 0.14);
+            imgObj.name = 'card_'+imgArr[i] + "_" + rand_;
             
             grupo.add(imgObj);
-            
             
             
             var imgFundoObj = this.add.image(posicao_.x, posicao_.y, "fundocard");//345, 475
             
             imgFundoObj.scale.setTo(0.14, 0.14);
             imgFundoObj.inputEnabled = true;
-            imgFundoObj.name = rand_;
+            imgFundoObj.name = 'capa_'+imgArr[i] + "_" + rand_;
             imgFundoObj.events.onInputUp.add(listener, this);
             
             grupo.add(imgFundoObj);
@@ -195,16 +216,15 @@ BasicGame.Game.prototype = {
             var imgObj = this.add.image(posicao_.x, posicao_.y, imgArr[i]);//345, 475
             
             imgObj.scale.setTo(0.14, 0.14);
+            imgObj.name = 'card_'+imgArr[i] + "_" + rand_;
             
             grupo.add(imgObj);
-            
-            
             
             var imgFundoObj = this.add.image(posicao_.x, posicao_.y, "fundocard");//345, 475
             
             imgFundoObj.scale.setTo(0.14, 0.14);
             imgFundoObj.inputEnabled = true;
-            imgFundoObj.name = rand_;
+            imgFundoObj.name = 'capa_'+imgArr[i] + "_" + rand_;
             imgFundoObj.events.onInputUp.add(listener, this);
             
             grupo.add(imgFundoObj);
@@ -253,6 +273,58 @@ function checkPosicao(valor, arrBusca){
 
 function listener(sprite, pointer){
     
-    console.log("OK_click_ "+sprite.name);
-    sprite.alpha = 0;
+    var vals = sprite.name.split("_");
+    
+    //console.log("OK_click_ "+sprite.name);
+    
+    if( escolha1 == null || escolha2 == null ){ sprite.alpha = 0; }
+    
+    if( escolha1 == null ){ 
+        //imgObj.name = 'card_'+imgArr[i] + "_" + rand_;
+        //imgFundoObj.name = 'capa_'+imgArr[i] + "_" + rand_;
+        escolha1 = vals[1];
+        objEscolha1 = sprite;
+        
+    }else if( escolha1 != null && escolha2 == null ) {
+        
+        escolha2 = vals[1];
+        objEscolha2 = sprite;
+    }
+    
+    if( escolha1 != null && escolha2 != null ){
+    
+         console.log(escolha1+" - "+escolha2);
+        
+        //setTimeout(alert('Diverentes!'), 5000);
+        
+        //testa
+        if( escolha1 == escolha2 ){
+            
+             ok_moeda.play();
+            
+             objEscolha1.destroy();
+             objEscolha2.destroy();
+            
+             escolha1 = null;
+             escolha2 = null;
+            
+             objEscolha1 = null;
+             objEscolha2 = null;
+            
+        }else{
+            
+             no.play();
+             objEscolha1.alpha = 1;
+             objEscolha2.alpha = 1;
+            
+             escolha1 = null;
+             escolha2 = null;
+            
+             objEscolha1 = null;
+             objEscolha2 = null;
+            
+            
+        }
+    }
+    
 }
