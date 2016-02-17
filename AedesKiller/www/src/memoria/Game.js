@@ -19,6 +19,12 @@ var objEscolha2;
 var ok_moeda;
 var no;
 
+var style = { font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+var style2 = { font: "bold 28px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+
+var countText; 
+var countTent = 0;
+
 var posicao = new Array(); //[1:{3,3}, ];
 
     posicao[1] = {x:3, y:3};
@@ -85,6 +91,8 @@ BasicGame.Game.prototype = {
         // Force the orientation in landscape or portrait.
         // * Set first to true to force landscape. 
         // * Set second to true to force portrait.
+        this.scale.forceLandscape = true;
+        
         this.scale.forceOrientation( true, false);
         // Sets the callback that will be called when the window resize event
         // occurs, or if set the parent container changes dimensions. Use this 
@@ -109,30 +117,33 @@ BasicGame.Game.prototype = {
         this.load.image('febre', '../asset/memoria/febre.png');
         this.load.image('olho', '../asset/memoria/olhos.png');
         
-        this.load.image('img1', '../asset/memoria/febre.png');
-        this.load.image('img2', '../asset/memoria/febre.png');
+        this.load.image('dorcabeca', '../asset/memoria/dorcabeca.png');
+        this.load.image('dornasjuntas', '../asset/memoria/dornasjuntas.png');
         
-        this.load.image('img3', '../asset/memoria/febre.png');
-        this.load.image('img4', '../asset/memoria/febre.png');
+        this.load.image('faltadeapetite', '../asset/memoria/faltadeapetite.png');
+        this.load.image('manchas', '../asset/memoria/manchas.png');
         
-        this.load.image('img5', '../asset/memoria/febre.png');
-        this.load.image('img6', '../asset/memoria/febre.png');
+        this.load.image('chikungunya', '../asset/memoria/chikungunya.png');
+        this.load.image('dengue', '../asset/memoria/dengue.png');
         
-        this.load.image('img7', '../asset/memoria/febre.png');
+        this.load.image('ciclodevida', '../asset/memoria/ciclodevida.png');
         
         this.load.image('fundocard', '../asset/memoria/fundocard.png');
         
-        this.load.image('img1', '../asset/memoria/febre.png');
+        this.load.image('bg', '../asset/memoria/madeira.jpeg');
+        
+        this.load.image('home', '../asset/memoria/home.png');
+        this.load.image('reset', '../asset/memoria/reset.png');
         
         imgArr.push('febre');
         imgArr.push('olho');
-        imgArr.push('img1');
-        imgArr.push('img2');
-        imgArr.push('img3');
-        imgArr.push('img4');
-        imgArr.push('img5');
-        imgArr.push('img6');
-        imgArr.push('img7');
+        imgArr.push('dorcabeca');
+        imgArr.push('dornasjuntas');
+        imgArr.push('faltadeapetite');
+        imgArr.push('manchas');
+        imgArr.push('chikungunya');
+        imgArr.push('dengue');
+        imgArr.push('ciclodevida');
         
         this.load.audio('ok_moeda', '../asset/memoria/ok_moeda.mp3');
         this.load.audio('mosquito', '../asset/memoria/Fly.mp3');
@@ -146,6 +157,27 @@ BasicGame.Game.prototype = {
     },
 
     create: function () {
+        
+        
+        this.bg = this.add.image(0, 0, "bg");
+        
+        this.home = this.add.image(540, 140, "home");
+        this.home.scale.setTo(0.3, 0.3);
+        this.home.inputEnabled = true;
+        this.home.name = "btnHome";
+        this.home.events.onInputUp.add(home, this);
+        
+        this.reset = this.add.image(540, 250, "reset");
+        this.reset.scale.setTo(0.3, 0.3);
+        this.reset.inputEnabled = true;
+        this.reset.name = "btnReset";
+        this.reset.events.onInputUp.add(reset, this);
+        
+        this.countTent = this.add.text(540, 3, "Tentativas", style);
+        this.countTent.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        
+        countText = this.add.text(540, 20, "0", style2);
+        countText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
        
         grupo = this.add.group();
         
@@ -243,6 +275,8 @@ BasicGame.Game.prototype = {
         
         this.stage.backgroundColor = '#CCC';
         
+        //this.stage.height = 5000;
+        
     },
 
     gameResized: function (width, height) {
@@ -270,6 +304,17 @@ function checkPosicao(valor, arrBusca){
     return false;
 }
 
+function home(sprite, pointer){
+    
+    location.href = "../index.html";
+    
+}
+
+function reset(sprite, pointer){
+    
+    location.href = "index.html";
+    
+}
 
 function listener(sprite, pointer){
     
@@ -278,6 +323,11 @@ function listener(sprite, pointer){
     //console.log("OK_click_ "+sprite.name);
     
     if( escolha1 == null || escolha2 == null ){ sprite.alpha = 0; }
+    
+    //  This tween will wait 2 seconds before starting
+    
+
+    
     
     if( escolha1 == null ){ 
         //imgObj.name = 'card_'+imgArr[i] + "_" + rand_;
@@ -289,7 +339,15 @@ function listener(sprite, pointer){
         
         escolha2 = vals[1];
         objEscolha2 = sprite;
+        
+        var tween = this.add.tween(sprite).to( { alpha: 0 }, 500, "Linear", true, 500);
+        //tween.onStart.add(verificar, this);
+        tween.onComplete.add(verificar, this);
     }
+    
+}
+
+function verificar(){
     
     if( escolha1 != null && escolha2 != null ){
     
@@ -325,6 +383,9 @@ function listener(sprite, pointer){
             
             
         }
+        
+        countTent++;
+        countText.text = ""+countTent;
     }
     
 }
