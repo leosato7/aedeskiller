@@ -18,12 +18,16 @@ var objEscolha2;
 
 var ok_moeda;
 var no;
+var win2;
 
 var style = { font: "bold 16px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
 var style2 = { font: "bold 28px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
 
 var countText; 
 var countTent = 0;
+var winTxt;
+
+var countWins = 0;
 
 var posicao = new Array(); //[1:{3,3}, ];
 
@@ -148,8 +152,8 @@ BasicGame.Game.prototype = {
         this.load.audio('ok_moeda', '../asset/memoria/ok_moeda.mp3');
         this.load.audio('mosquito', '../asset/memoria/Fly.mp3');
         this.load.audio('no', '../asset/memoria/no.mp3');
-        this.load.audio('perdeu', '../asset/memoria/perdeu.mp3');
-        this.load.audio('win1', '../asset/memoria/win1.mp3');
+        
+        
         this.load.audio('win2', '../asset/memoria/win2.mp3');
         
         // this.load.spritesheet('button', 'assets/buttons/button_sprite_sheet.png', 193, 71);
@@ -175,6 +179,9 @@ BasicGame.Game.prototype = {
         
         this.countTent = this.add.text(540, 3, "Tentativas", style);
         this.countTent.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+                        
+        winTxt = this.add.text(540, 65, "", style);
+        winTxt.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
         
         countText = this.add.text(540, 20, "0", style2);
         countText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
@@ -183,6 +190,9 @@ BasicGame.Game.prototype = {
         
         ok_moeda = this.add.audio('ok_moeda');
         ok_moeda.volume = 0.5;
+        
+        win2 = this.add.audio('win2');
+        win2.volume = 0.5;
         
         no = this.add.audio('no');
         no.volume = 0.6;
@@ -351,14 +361,12 @@ function verificar(){
     
     if( escolha1 != null && escolha2 != null ){
     
-         console.log(escolha1+" - "+escolha2);
         
-        //setTimeout(alert('Diverentes!'), 5000);
         
         //testa
         if( escolha1 == escolha2 ){
             
-             ok_moeda.play();
+             countWins++;
             
              objEscolha1.destroy();
              objEscolha2.destroy();
@@ -368,6 +376,18 @@ function verificar(){
             
              objEscolha1 = null;
              objEscolha2 = null;
+            
+            if(countWins==9){
+                
+                win2.play();
+
+                winTxt.text = "Vitória";
+
+            }else{
+                
+                ok_moeda.play();
+            }
+             
             
         }else{
             
@@ -386,6 +406,8 @@ function verificar(){
         
         countTent++;
         countText.text = ""+countTent;
+        
+        
     }
     
 }
