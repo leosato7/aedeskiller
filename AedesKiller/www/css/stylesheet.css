@@ -41,10 +41,8 @@ body {
 }
 
 #menu ul.accordion li.content-accordion.g-nave {
-    color: #fff;
-    background-image: url('../asset/menu-game-nave-bg.jpg');
-    background-size: cover;
-    background-position: right center;
+    color: #000;
+    text-align: left;
 }
 
 #menu a.menu-btn {
@@ -60,4 +58,8 @@ body {
 .game-nave-canvas {
     width: 100%;
     height: 100%;
+}
+
+#introNave {
+    padding: 5%;
 }

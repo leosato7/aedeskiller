@@ -5,42 +5,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
     <meta name="format-detection" content="telephone=no">
-    <meta name="HandheldFriendly" content="true" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="Phaser App">
     <meta name="viewport" content="initial-scale=1 maximum-scale=1 user-scalable=0 minimal-ui" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- non-retina iPhone pre iOS 7 -->
-    <link rel="apple-touch-icon" sizes="57x57" href="icons/app_icon_57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="icons/app_icon_60x60.png">
-    <!-- non-retina iPad pre iOS 7 -->
-    <link rel="apple-touch-icon" sizes="72x72" href="icons/app_icon_72x72.png">
-    <!-- non-retina iPad iOS 7 -->
-    <link rel="apple-touch-icon" sizes="76x76" href="icons/app_icon_76x76.png">
-    <!-- retina iPhone pre iOS 7 -->
-    <link rel="apple-touch-icon" sizes="114x114" href="icons/app_icon_114x114.png">
-    <!-- retina iPhone iOS 7 -->
-    <link rel="apple-touch-icon" sizes="120x120" href="icons/app_icon_120x120.png">
-    <!-- retina iPad pre iOS 7 -->
-    <link rel="apple-touch-icon" sizes="144x144" href="icons/app_icon_144x144.png">
-    <!-- retina iPad iOS 7 -->
-    <link rel="apple-touch-icon" sizes="152x152" href="icons/app_icon_152x152.png">
-    <link rel="apple-touch-icon" sizes="256x256" href="icons/app_icon_256x256.png">
-    <link rel="apple-touch-icon" sizes="512x512" href="icons/app_icon_512x512.png">
-    <link rel="apple-touch-icon" sizes="1024x1024" href="icons/app_icon_1024x1024.png">
-    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" charset="utf-8" />
+
+    <link rel="stylesheet" href="../css/stylesheet.css" type="text/css" charset="utf-8" />
     
     
-    <script src="src/jquery-1.12.0.min.js"></script>
+    <script src="../src/jquery-1.12.0.min.js"></script>
     <!-- Load game entrance -->
-    <!--script src="src/app.js"></script-->
-    <!-- Load and initialize Cordova -->
-    <script src="cordova.js"></script>
-    <script src="src/cordova-init.js"></script>
 </head>
-<body style="background: url('asset/focos_casa.jpeg') no-repeat center center fixed #CCC;">
+<body style="background-color: #fff; background: url(../asset/nave/danger.png) no-repeat top right; background-attachment: fixed; font-size: 13px;">
     <div id="introNave">
         
         <div>
@@ -48,19 +25,73 @@
             <p>
                 Mova o soldado enquanto os tiros automaticos acontecem.
                 <br />
-                Clique em "LOAD" para mudar o tipo de tiro
+                Clique em "RELOAD" para mudar o tipo de tiro
             </p>
             <h3>
                 Objetivo
             </h3>
             <p>
-                Não deixe os mosquitos te passarem ou eles vão infectar as pessoas ou procriar na vila.
+                Não deixe os mosquitos te passarem ou eles vão 
+                <br />
+                infectar as pessoas ou procriar na vila.
             </p>
             <div>
                 <a class="menu-btn" href="index.html">
                     JOGAR
                 </a>
             </div>
+            <!--
+            <h3>
+                Manual - mosquitos
+            </h3>
+            <p>existem 4 tipos de mosquito invadindo a vila.</p>
+            <p>
+                <img src="../asset/nave/tuto-1.jpg" style="float: left;"/>
+                1°- Mosquito macho radioativo
+                <br />
+                <br />
+                Neste mundo um macho pode infectar pessoas com radiação, 
+                eles também podem virar um mosquito mutante.
+                <br />
+                No pior dos casos as larvas da combinação de um deles com a dengue 
+                pode dar origem ao mosquito mais tenebroso
+                <br />
+                <br />
+                [Velocidade: média, Vida: mínima]
+            </p>
+            <p>
+                <img src="../asset/nave/tuto-2.jpg" style="float: left;"/>
+                2°- Aedes Egypt
+                <br />
+                <br />
+                O impiedoso mosquito da dengue, pica pessoas e causa terror, 
+                não tem hora para atacar e é super ágil
+                <br />
+                <br />
+                [Velocidade: alta e ágil, Vida: mínima]
+            </p>
+            <p>
+                <img src="../asset/nave/tuto-3.jpg" style="float: left;"/>
+                3°- Aedes Egypt Mutante (mini-boss)
+                <br />
+                <br />
+                Antes a dengue era fêmea, mas após a falha com a radiação
+                surgiu a dengue macho, sendo ela um macho grande e totalmente nocivo a vida.
+                <br />
+                <br />
+                [Velocidade: baixa, Vida: mínima nesta versão do game]
+            </p>
+            <p>
+                <img src="../asset/nave/dengao.png" style="float: left;"/>
+                4°- DENGÃO (boss)
+                <br />
+                <br />
+                Um mosquito da dengue poderoso e totalmente radioativo, 
+                ele parece tão esperto quanto um humano
+                <br />
+                <br />
+                [Velocidade: muito baixa, Vida: mínima nesta versão do game]
+            </p>-->
         </div>
         
     </div>

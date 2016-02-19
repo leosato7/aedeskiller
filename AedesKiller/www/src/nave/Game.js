@@ -8,6 +8,8 @@ var naveUtils;
 var gameItens = {};
 gameItens.acmenu = null;
 gameItens.graphics = null;
+gameItens.bg = null;
+gameItens.pause_label = null;
 gameItens.chargeBar = null;
 gameItens.textChargeBar = "";
 gameItens.textAcSkill = "";
@@ -86,10 +88,15 @@ BasicGame.Game.prototype = {
         this.load.spritesheet('shoot_3', '../asset/nave/shoots/ice.png', 199, 28, 2);
         this.load.spritesheet('shoot_4', '../asset/nave/shoots/thunder.png', 101, 15, 2);
         this.load.spritesheet('shoot_5', '../asset/nave/shoots/venon.png', 56.25, 89, 4);
+        //this.load.audio('somfundo', ['../asset/nave/bg.mp3', '../asset/nave/bg.ogg']);
     },
 
     create: function () {
-               
+        var vid = document.getElementById("bgaudio");
+        vid.loop = true;
+        vid.autoplay = true;
+        vid.load();
+        
         this.fundo = this.add.sprite(
            this.world.centerX, // (centerX, centerY) is the center coordination
             this.world.centerY,
@@ -97,6 +104,13 @@ BasicGame.Game.prototype = {
         
         this.fundo.anchor.setTo(0.5, 0.5);
         this.fundo.scale.setTo(4, 4);
+        
+//        gameItens.pause_label = this.add.text(this.world.centerX, 22, 'Pausar/Continuar', { font: '15px Arial', fill: '#000' });
+//        gameItens.pause_label.inputEnabled = true;
+//        gameItens.pause_label.anchor.setTo(0.5, 0.5);
+//        gameItens.pause_label.events.onInputUp.add(function () {
+//                this.paused = true;
+//        });
         
         naveUtils = new NaveUtils(this);
         
@@ -147,6 +161,11 @@ BasicGame.Game.prototype = {
         
         naveUtils.nascerInimigo(1500);
         naveUtils.dispararSkill(naveUtils.skills[naveUtils.skillNumber].time);
+        
+        
+//        gameItens.bg = this.add.audio('somfundo');
+//        gameItens.bg.play();
+        //gameItens.bg.play('somfundo', 0, 1, true);
     },
 
     gameResized: function (width, height) {
