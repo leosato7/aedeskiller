@@ -4,7 +4,7 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "projectGuid": "90abe010-2bb6-40e6-8665-19142c8e6973",
-      "lastModifiedDate": 1455859301914,
+      "lastModifiedDate": 1455987488377,
       "creationDate": 1453332015339
     },
     "sourceDirectory": "www",
@@ -107,7 +107,32 @@
           "intents": [],
           "navigation": []
         },
-        "icons_": [],
+        "icons_": [
+          {
+            "relPath": "asset/AedesKiller96x96.png",
+            "density": "xhdpi",
+            "height": 96,
+            "width": 96
+          },
+          {
+            "relPath": "asset/AedesKiller72x72.png",
+            "density": "hdpi",
+            "height": 72,
+            "width": 72
+          },
+          {
+            "relPath": "asset/AedesKiller48x48.png",
+            "density": "mdpi",
+            "height": 48,
+            "width": 48
+          },
+          {
+            "relPath": "asset/AedesKiller36x36.png",
+            "density": "ldpi",
+            "height": 36,
+            "width": 36
+          }
+        ],
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
