@@ -9,6 +9,10 @@
 <author>Intel XDK</author>
 <content src="index.html"/>
 <access origin="*"/>
+<icon platform="android" src="asset/AedesKiller96x96.png" density="xhdpi" width="96" height="96"/>
+<icon platform="android" src="asset/AedesKiller72x72.png" density="hdpi" width="72" height="72"/>
+<icon platform="android" src="asset/AedesKiller48x48.png" density="mdpi" width="48" height="48"/>
+<icon platform="android" src="asset/AedesKiller36x36.png" density="ldpi" width="36" height="36"/>
 <intelxdk:plugin intelxdk:name="StatusBar" intelxdk:value="cordova-plugin-statusbar" intelxdk:version="1.0.0" intelxdk:checksum="b4e7aac6"/>
 <intelxdk:plugin intelxdk:name="Device" intelxdk:value="cordova-plugin-device" intelxdk:version="1.0.1" intelxdk:checksum="adfc61ba"/>
 <intelxdk:plugin intelxdk:name="Splashscreen" intelxdk:value="cordova-plugin-splashscreen" intelxdk:version="2.1.0" intelxdk:checksum="170efb68"/>
