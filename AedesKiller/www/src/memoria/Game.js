@@ -401,7 +401,6 @@ function verificar(){
              objEscolha1 = null;
              objEscolha2 = null;
             
-            
         }
         
         countTent++;
