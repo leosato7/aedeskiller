@@ -4,7 +4,7 @@
     "creationData": {
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "projectGuid": "90abe010-2bb6-40e6-8665-19142c8e6973",
-      "lastModifiedDate": 1455987488377,
+      "lastModifiedDate": 1455991743935,
       "creationDate": 1453332015339
     },
     "sourceDirectory": "www",
@@ -98,7 +98,7 @@
         },
         "isActive_": true,
         "appName_": "AedesKiller",
-        "appID_": "xdk.intel.phaser.js.project",
+        "appID_": "ricardobr.fiap.aedeskiller",
         "appAccess_": {
           "mode": "legacy",
           "network": [
@@ -139,8 +139,8 @@
         "cordovaCLIVersion_": "5.1.1",
         "crosswalkVersion_": "15",
         "appVersion_": "0.0.1",
-        "appDescription_": "Use this template to start with a blank landscape Game from Phaser",
-        "appAuthor_": "Intel XDK",
+        "appDescription_": "Jogo com mosquitos",
+        "appAuthor_": "RicardoBR",
         "appVersionCode_": "1"
       },
       "Android": {
@@ -156,7 +156,7 @@
         },
         "isActive_": true,
         "appName_": "AedesKiller",
-        "appID_": "xdk.intel.phaser.js.project",
+        "appID_": "ricardobr.fiap.aedeskiller",
         "appAccess_": {
           "mode": "legacy",
           "network": [
@@ -172,8 +172,8 @@
         "cordovaCLIVersion_": "5.1.1",
         "crosswalkVersion_": "14",
         "appVersion_": "0.0.1",
-        "appDescription_": "Use this template to start with a blank landscape Game from Phaser",
-        "appAuthor_": "Intel XDK",
+        "appDescription_": "Jogo com mosquitos",
+        "appAuthor_": "RicardoBR",
         "appVersionCode_": "1"
       },
       "iOS": {
@@ -188,7 +188,7 @@
         },
         "isActive_": true,
         "appName_": "AedesKiller",
-        "appID_": "xdk.intel.phaser.js.project",
+        "appID_": "ricardobr.fiap.aedeskiller",
         "appAccess_": {
           "mode": "legacy",
           "network": [
@@ -205,8 +205,8 @@
         "cordovaCLIVersion_": "5.1.1",
         "crosswalkVersion_": "14",
         "appVersion_": "0.0.1",
-        "appDescription_": "Use this template to start with a blank landscape Game from Phaser",
-        "appAuthor_": "Intel XDK"
+        "appDescription_": "Jogo com mosquitos",
+        "appAuthor_": "RicardoBR"
       },
       "Windows8": {
         "platform_": "windows8",
@@ -220,7 +220,7 @@
         },
         "isActive_": true,
         "appName_": "AedesKiller",
-        "appID_": "xdk.intel.phaser.js.project",
+        "appID_": "ricardobr.fiap.aedeskiller",
         "appAccess_": {
           "mode": "legacy",
           "network": [
@@ -236,8 +236,8 @@
         "cordovaCLIVersion_": "5.1.1",
         "crosswalkVersion_": "14",
         "appVersion_": "0.0.0.1",
-        "appDescription_": "Use this template to start with a blank landscape Game from Phaser",
-        "appAuthor_": "Intel XDK"
+        "appDescription_": "Jogo com mosquitos",
+        "appAuthor_": "RicardoBR"
       },
       "WebApp": {
         "platform_": "webapp",
